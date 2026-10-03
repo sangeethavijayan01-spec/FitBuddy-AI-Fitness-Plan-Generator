@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Create your AI workout plan{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <h1>Your personal <span class="accent">AI fitness buddy</span></h1>
+  <p>Tell us a little about yourself and get a personalised 7-day workout plan, a nutrition tip, and the option to adjust the plan with your feedback.</p>
+</section>
+
+<section class="card form-card">
+  <h2>Create your plan</h2>
+
+  {% if error_message %}
+  <div class="alert alert-error" role="alert">{{ error_message }}</div>
+  {% endif %}
+  {% if errors %}
+  <div class="alert alert-error" role="alert">Please fix the highlighted fields below.</div>
+  {% endif %}
+
+  <form method="post" action="/generate-plan" data-loading="Generating your personalised 7-day plan…">
+    <div class="form-grid">
+      <div class="field {% if errors.get('name') %}has-error{% endif %}">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required minlength="2" maxlength="60"
+               autocomplete="given-name" placeholder="e.g. Asha" value="{{ values.get('name', '') }}">
+        {% if errors.get('name') %}<p class="error-text">{{ errors.get('name') }}</p>{% endif %}
+      </div>
+
+      <div class="field {% if errors.get('age') %}has-error{% endif %}">
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" required inputmode="numeric" step="1"
+               min="{{ limits.min_age }}" max="{{ limits.max_age }}" placeholder="e.g. 21"
+               value="{{ values.get('age', '') }}">
+        <p class="hint">{{ limits.min_age }} – {{ limits.max_age }} years</p>
+        {% if errors.get('age') %}<p class="error-text">{{ errors.get('age') }}</p>{% endif %}
+      </div>
+
+      <div class="field {% if errors.get('weight') %}has-error{% endif %}">
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" name="weight" required inputmode="decimal" step="0.1"
+               min="{{ limits.min_weight }}" max="{{ limits.max_weight }}" placeholder="e.g. 62.5"
+               value="{{ values.get('weight', '') }}">
+        <p class="hint">{{ limits.min_weight }} – {{ limits.max_weight }} kg</p>
+        {% if errors.get('weight') %}<p class="error-text">{{ errors.get('weight') }}</p>{% endif %}
+      </div>
+    </div>
+
+    <fieldset class="field {% if errors.get('goal') %}has-error{% endif %}">
+      <legend>Fitness goal</legend>
+      <div class="choice-grid">
+        {% for g in goal_options %}
+        <label class="choice">
+          <input type="radio" name="goal" value="{{ g.value }}" required
+                 {% if values.get('goal') == g.value %}checked{% endif %}>
+          <span class="choice-body">
+            <span class="choice-icon" aria-hidden="true">{{ g.icon }}</span>
+            <strong>{{ g.value }}</strong>
+            <small>{{ g.desc }}</small>
+          </span>
+        </label>
+        {% endfor %}
+      </div>
+      {% if errors.get('goal') %}<p class="error-text">{{ errors.get('goal') }}</p>{% endif %}
+    </fieldset>
+
+    <fieldset class="field {% if errors.get('intensity') %}has-error{% endif %}">
+      <legend>Workout intensity</legend>
+      <div class="choice-grid">
+        {% for i in intensity_options %}
+        <label class="choice">
+          <input type="radio" name="intensity" value="{{ i.value }}" required
+                 {% if values.get('intensity') == i.value %}checked{% endif %}>
+          <span class="choice-body">
+            <span class="choice-icon" aria-hidden="true">{{ i.icon }}</span>
+            <strong>{{ i.value }}</strong>
+            <small>{{ i.desc }}</small>
+          </span>
+        </label>
+        {% endfor %}
+      </div>
+      {% if errors.get('intensity') %}<p class="error-text">{{ errors.get('intensity') }}</p>{% endif %}
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary btn-block">Generate my 7-day plan</button>
+    <p class="disclaimer small">{{ disclaimer }}</p>
+  </form>
+</section>
+
+<section class="feature-grid">
+  <div class="card feature"><span class="feature-icon">🗓️</span><h3>7-day plan</h3><p>Warm-up, exercises, sets, reps, cooldown and recovery for every day.</p></div>
+  <div class="card feature"><span class="feature-icon">🥗</span><h3>Nutrition tip</h3><p>A short, goal-specific tip on food, hydration and recovery.</p></div>
+  <div class="card feature"><span class="feature-icon">🔁</span><h3>Plan updates</h3><p>Not quite right? Give feedback and the AI adjusts your plan.</p></div>
+</section>
+{% endblock %}
