@@ -366,7 +366,175 @@ The application was enhanced for desktop, tablet, and mobile screen sizes.
 
 ---
 
+                         ┌───────────────────────┐
+                         │         USER          │
+                         └───────────┬───────────┘
+                                     │
+                                     ▼
+                         ┌───────────────────────┐
+                         │     JINJA2 WEB UI     │
+                         │    HTML / CSS / JS    │
+                         └───────────┬───────────┘
+                                     │
+                                     ▼
+                         ┌───────────────────────┐
+                         │       FASTAPI         │
+                         │      ROUTE LAYER      │
+                         └───────────┬───────────┘
+                                     │
+                   ┌─────────────────┼─────────────────┐
+                   │                 │                 │
+                   ▼                 ▼                 ▼
+          ┌────────────────┐ ┌──────────────┐ ┌──────────────┐
+          │ SERVICE LAYER  │ │ SECURITY     │ │   JSON API   │
+          └───────┬────────┘ └──────────────┘ └──────────────┘
+                  │
+                  ▼
+          ┌──────────────────┐
+          │   GOOGLE GEMINI  │
+          │     AI LAYER     │
+          └────────┬─────────┘
+                   │
+                   ▼
+          ┌──────────────────┐
+          │ PYDANTIC         │
+          │ VALIDATION       │
+          └────────┬─────────┘
+                   │
+                   ▼
+          ┌──────────────────┐
+          │ SQLALCHEMY ORM   │
+          └────────┬─────────┘
+                   │
+                   ▼
+          ┌──────────────────┐
+          │ SQLITE DATABASE  │
+          └──────────────────┘
+
+Application  Flow
+
+                      START
+                        │
+                        ▼
+                ┌───────────────┐
+                │    SIGNUP     │
+                └───────┬───────┘
+                        │
+                        ▼
+                ┌───────────────┐
+                │     LOGIN     │
+                └───────┬───────┘
+                        │
+                        ▼
+              ┌───────────────────┐
+              │ FITNESS ASSESSMENT│
+              └─────────┬─────────┘
+                        │
+                        ▼
+              ┌───────────────────┐
+              │ GENERATE PLAN     │
+              └─────────┬─────────┘
+                        │
+                        ▼
+              ┌───────────────────┐
+              │   GOOGLE GEMINI   │
+              │   AI PROCESSING   │
+              └─────────┬─────────┘
+                        │
+                        ▼
+              ┌───────────────────┐
+              │ STRUCTURED 7-DAY  │
+              │ WORKOUT PLAN      │
+              └─────────┬─────────┘
+                        │
+              ┌─────────┼──────────┐
+              │         │          │
+              ▼         ▼          ▼
+           WORKOUT   NUTRITION   RECOVERY
+              │
+              ▼
+       DAILY COMPLETION
+              │
+              ▼
+          FEEDBACK
+              │
+              ▼
+       GEMINI PLAN UPDATE
+              │
+              ▼
+        UPDATED PLAN
+              │
+              ▼
+      PROGRESS TRACKING
+              │
+              ▼
+          HISTORY
+
+AI WorkFlow
+
+User Fitness Information
+          │
+          ▼
+   Personalized Prompt
+          │
+          ▼
+     Google Gemini
+          │
+          ▼
+  Structured AI Output
+          │
+          ▼
+ Pydantic Validation
+          │
+          ▼
+    Service Layer
+          │
+          ▼
+ SQLite Database
+          │
+          ▼
+ Jinja2 Result Page
+
+ Admin Monitoring Flow
+
+ Admin Login
+     │
+     ▼
+Admin Dashboard
+     │
+     ├──────────────► Registered Users
+     │
+     ├──────────────► Workout Plans
+     │
+     ├──────────────► Feedback
+     │
+     ├──────────────► Progress Records
+     │
+     └──────────────► Workout Completion
+
 # 9. 📁 Complete Project Folder
+
+Feedback Workflow
+Current Workout Plan
+          │
+          ▼
+     User Feedback
+          │
+          ▼
+Difficulty / Energy /
+Workout Preferences
+          │
+          ▼
+     Google Gemini
+          │
+          ▼
+    Updated Plan
+          │
+          ▼
+  Database Storage
+          │
+          ▼
+ Updated Result Page
 
 The main project folder is:
 
